@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{947651F4-F2EC-4A26-B00F-6799FF4B4585}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1FDD0528-C82D-463B-9B52-A6C45CAE3049}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sdk", "Sdk", "{1B6E70BB-47BF-46DD-9480-3C22963A19EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5104C11E-DE1D-4906-8D8A-D62F3716C0D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Common", "src\Common\AspNetCore.Common\AspNetCore.Common.csproj", "{99CEF8AE-A582-4C52-A862-3F011A2A6901}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api.Notification", "Api.Notification", "{ED577627-D9E5-48F6-A150-1CF7A96D2536}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Notification.Municipio.Perico", "src\Services\Api.Notification\Api.Notification.Municipio.Perico\Api.Notification.Municipio.Perico.csproj", "{9D75A214-0E95-4ACE-8EED-395687441322}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99CEF8AE-A582-4C52-A862-3F011A2A6901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99CEF8AE-A582-4C52-A862-3F011A2A6901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99CEF8AE-A582-4C52-A862-3F011A2A6901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99CEF8AE-A582-4C52-A862-3F011A2A6901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D75A214-0E95-4ACE-8EED-395687441322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D75A214-0E95-4ACE-8EED-395687441322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D75A214-0E95-4ACE-8EED-395687441322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D75A214-0E95-4ACE-8EED-395687441322}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99CEF8AE-A582-4C52-A862-3F011A2A6901} = {1FDD0528-C82D-463B-9B52-A6C45CAE3049}
+		{ED577627-D9E5-48F6-A150-1CF7A96D2536} = {5104C11E-DE1D-4906-8D8A-D62F3716C0D9}
+		{9D75A214-0E95-4ACE-8EED-395687441322} = {ED577627-D9E5-48F6-A150-1CF7A96D2536}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {566577DB-B79B-4040-A51F-C14E101C0EBD}
+	EndGlobalSection
+EndGlobal
