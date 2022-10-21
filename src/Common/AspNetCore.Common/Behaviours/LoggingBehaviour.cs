@@ -1,36 +1,45 @@
-﻿using MediatR.Pipeline;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace AspNetCore.Common.Behaviours
 {
-    public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
+    public class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<LoggingBehaviour<TRequest, TResponse>> _logger;
         private readonly IHttpContextAccessor _http;
 
-        public LoggingBehaviour(ILogger<TRequest> logger, IHttpContextAccessor http)
+        public LoggingBehaviour(ILogger<LoggingBehaviour<TRequest, TResponse>> logger, IHttpContextAccessor http)
         {
             _logger = logger;
             _http = http;
         }
 
-        public async Task Process(TRequest request, CancellationToken cancellationToken)
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+            //Request
             var requestName = typeof(TRequest).Name;
 
-            var user = await GetUserID();
+            _logger.LogInformation($"Handling {requestName}");
 
-            var ipAdress = _http.HttpContext.Connection.RemoteIpAddress.ToString();
+            Type? type = request?.GetType();
 
-            _logger.LogInformation("CQRS + MedaitR Request: {Name} {UserId} {IpAdress} {@Request}",
-                requestName, user, ipAdress, request);
-        }
 
-        public async Task<string> GetUserID()
-        {
-            /** Here we need inject the identity server or application identity to get the user ID*/
-            return await Task.FromResult("User ID");
+            IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
+
+            foreach (PropertyInfo prop in props)
+            {
+                object propValue = prop.GetValue(request, null);
+                _logger.LogInformation("{Property} : {@Value}", prop.Name, propValue);
+            }
+
+            var response = await next();
+
+            //Response
+            _logger.LogInformation($"Handled {typeof(TResponse).Name}");
+            return response;
         }
     }
 }

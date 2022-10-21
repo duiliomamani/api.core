@@ -13,18 +13,20 @@ namespace AspNetCore.Common.Statics
             MongoDb,
             SqlServer,
             AzureStorage,
-            Redis
+            Redis,
+            RabbitMq,
+            PostgreSql
         }
         public class Swagger
         {
             /// <summary>
             /// Swagger for title documentation
             /// </summary>
-            public string? Title { get; set; }
+            public string Title { get; set; }
             /// <summary>
             /// Swagger for entry point api-docs
             /// </summary>
-            public string? RoutePrefix { get; set; }
+            public string RoutePrefix { get; set; }
             /// <summary>
             /// Swagger for Enabled documentation xml
             /// </summary>
@@ -37,16 +39,14 @@ namespace AspNetCore.Common.Statics
         public class ConnectionString
         {
             public CoreTypeEnum Core { get; set; }
-            public string? Database { get; set; }
-            public string? Server { get; set; }
-            public string? Password { get; set; }
+            public string Connection { get; set; }
+            public string Server { get; set; }
+            public string Password { get; set; }
         }
         public class Auth
         {
-            public string? Issue { get; set; }
-            public string? Audience { get; set; }
-            public string? SecretKeyAuth { get; set; }
-            public int ExpirationTimeInSeconds { get; set; }
+            public string Domain { get; set; }
+            public string Audience { get; set; }
         }
     }
 }

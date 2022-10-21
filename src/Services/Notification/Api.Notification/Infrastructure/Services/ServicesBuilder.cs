@@ -1,0 +1,97 @@
+﻿using Api.Notification.Application;
+using Api.Notification.Infrastructure.Services.EventBus.Consumers;
+using Api.Notification.Infrastructure.Services.EventBus.Hubs.Base;
+using AspNetCore.Common.Infrastructure.ApiVersioning;
+using AspNetCore.Common.Infrastructure.Auth;
+using AspNetCore.Common.Infrastructure.Swagger;
+using AspNetCore.Common.Statics;
+using MassTransit;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace Api.Notification.Infrastructure.Services
+{
+    /// <summary>
+    /// ServicesBuilder
+    /// </summary>
+    public static class ServicesBuilder
+    {
+        /// <summary>
+        /// Services Configure all extension for example Swagger
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static IServiceCollection ServicesConfigure(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAppSettings(configuration);
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddHttpContextAccessor();
+
+            services.AddHealthChecks();
+
+            //RoutePrefix casesensitive LowerCaseURL
+            services.Configure<RouteOptions>(config => config.LowercaseUrls = true);
+
+            // Add services to the container.
+            services.AddControllers().AddNewtonsoftJson(config =>
+            {
+                config.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                config.SerializerSettings.Formatting = Formatting.Indented;
+                config.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                config.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
+                config.SerializerSettings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
+                config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver()
+                { NamingStrategy = new CamelCaseNamingStrategy(true, true) };
+            }).AddXmlDataContractSerializerFormatters();
+
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddEndpointsApiExplorer();
+
+            //Cors Origins
+            services.AddCors(config =>
+            {
+                config.AddDefaultPolicy(options =>
+                    options.SetIsOriginAllowed(_ => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
+            //Auth
+            services.AddAuthExtension();
+            //ApiVersion
+            services.AddApiVersionExtension();
+            //Swagger
+            services.AddSwaggerExtension();
+
+            services.AddSignalR();
+
+            services.AddSingleton<IHubConnections<string>, HubConnections<string>>();
+
+            var options = services.BuildServiceProvider().GetRequiredService<IOptions<List<AppSettings.ConnectionString>>>().Value;
+
+            var mq = options.First(x => x.Core == AppSettings.CoreTypeEnum.RabbitMq);
+
+            // MassTransit-RabbitMQ Configuration
+            services.AddMassTransit(config => {
+                config.AddConsumer<NotificationConsumer>();
+
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(mq.Server);
+                    cfg.ReceiveEndpoint(mq.Connection, c => {
+                        c.ConfigureConsumer<NotificationConsumer>(ctx);
+                    });
+                });
+            });
+
+            //Application
+            services.AddApplication();
+
+            return services;
+        }
+    }
+}
