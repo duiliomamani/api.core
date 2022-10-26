@@ -5,16 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Notification.Controllers.Base
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     [Consumes("application/json")]
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(Response))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Response))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(Response))]
-    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(Response))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(Response))]
+    [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(TResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(TResponse))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(TResponse))]
+    [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(TResponse))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(TResponse))]
     public abstract class ApiController : ControllerBase
     {
         private readonly IConfiguration _configuration;

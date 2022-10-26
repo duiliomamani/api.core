@@ -1,10 +1,12 @@
 ﻿using Api.Notification.Infrastructure.Services.EventBus.Hubs.Base;
+using AspNetCore.Common.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 
 namespace Api.Notification.Infrastructure.Services.EventBus.Hubs
 {
-    //[Authorize]
+    [Authorize]
     public class NotificationHub : Hub
     {
         private readonly ILogger<NotificationHub> _logger;

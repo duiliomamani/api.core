@@ -8,7 +8,7 @@ namespace Api.Notification.Application.Features.Notification.Commands.Insert
     public class InsertNotificationCommand : IRequestWrapper, IMapFrom<NotificationQEvent>
     {
         public Guid ClientId { get; set; }
-        public string Email { get; set; }
+        public string UserId { get; set; }
         public string Message { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

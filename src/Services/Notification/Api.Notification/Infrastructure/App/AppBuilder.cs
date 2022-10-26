@@ -45,7 +45,7 @@ namespace Api.Notification.Infrastructure.App
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<NotificationHub>("/notification/consumer");
+                endpoints.MapHub<NotificationHub>("/notificationhub");
             });
             return app;
         }

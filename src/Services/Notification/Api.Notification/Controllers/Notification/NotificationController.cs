@@ -15,7 +15,7 @@ namespace Api.Notification.Controllers.Notification
         }
 
         [HttpPost("insert")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Response))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TResponse))]
         public async Task<IActionResult> Insert([FromBody] InsertNotificationCommand command)
         {
             return Ok(await Mediator.Send(command));

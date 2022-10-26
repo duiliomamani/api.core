@@ -4,16 +4,16 @@
     /// A standard response for service calls.
     /// </summary>
     /// <typeparam name="T">Return data type</typeparam>
-    public class Response<T> : Response
+    public class TResponse<T> : TResponse
     {
         public T Data { get; set; }
-        public Response(T data)
+        public TResponse(T data)
         {
             Data = data;
         }
 
     }
-    public class Response
+    public class TResponse
     {
         public bool IsSuccessfull { get; set; } = true;
         public string? Message { get; set; }

@@ -17,8 +17,8 @@ namespace Api.Notification.Infrastructure.Services.EventBus.Consumers
         private readonly IHubContext<NotificationHub> _hub;
         private readonly IHubConnections<string> _connections;
 
-        public NotificationConsumer(IMediator mediator, IMapper mapper, ILogger<NotificationConsumer> logger, 
-            IHubContext<NotificationHub> hub,IHubConnections<string> connections)
+        public NotificationConsumer(IMediator mediator, IMapper mapper, ILogger<NotificationConsumer> logger,
+            IHubContext<NotificationHub> hub, IHubConnections<string> connections)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -29,11 +29,11 @@ namespace Api.Notification.Infrastructure.Services.EventBus.Consumers
 
         public async Task Consume(ConsumeContext<NotificationQEvent> context)
         {
-            var clientConnections = _connections.GetConnections(context.Message.Email);
+            var clientConnections = _connections.GetConnections(context.Message.UserId);
 
             foreach (var cli in clientConnections)
             {
-                await _hub.Clients.Client(cli).SendAsync("ReceiveMQMessage", JsonHelper.Serialize(context.Message));
+                 await _hub.Clients.Client(cli).SendAsync("GetNotification", JsonHelper.Serialize(context.Message), "test", "asdakjasldfkadsfladskjf");
                 _logger.LogInformation($"Message {JsonHelper.Serialize(context.Message)}");
             }
         }

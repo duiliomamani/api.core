@@ -32,7 +32,7 @@ namespace Api.Notification.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
-            Response<IEnumerable<WeatherForecast>>? response = new(enums);
+            TResponse<IEnumerable<WeatherForecast>>? response = new(enums);
             return await Task.Run(() => Ok(response));
         }
     }

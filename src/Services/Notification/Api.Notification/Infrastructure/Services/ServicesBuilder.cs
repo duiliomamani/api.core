@@ -1,12 +1,8 @@
 ﻿using Api.Notification.Application;
-using Api.Notification.Infrastructure.Services.EventBus.Consumers;
-using Api.Notification.Infrastructure.Services.EventBus.Hubs.Base;
+using Api.Notification.Infrastructure.Services.EventBus;
 using AspNetCore.Common.Infrastructure.ApiVersioning;
 using AspNetCore.Common.Infrastructure.Auth;
 using AspNetCore.Common.Infrastructure.Swagger;
-using AspNetCore.Common.Statics;
-using MassTransit;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -68,25 +64,7 @@ namespace Api.Notification.Infrastructure.Services
             //Swagger
             services.AddSwaggerExtension();
 
-            services.AddSignalR();
-
-            services.AddSingleton<IHubConnections<string>, HubConnections<string>>();
-
-            var options = services.BuildServiceProvider().GetRequiredService<IOptions<List<AppSettings.ConnectionString>>>().Value;
-
-            var mq = options.First(x => x.Core == AppSettings.CoreTypeEnum.RabbitMq);
-
-            // MassTransit-RabbitMQ Configuration
-            services.AddMassTransit(config => {
-                config.AddConsumer<NotificationConsumer>();
-
-                config.UsingRabbitMq((ctx, cfg) => {
-                    cfg.Host(mq.Server);
-                    cfg.ReceiveEndpoint(mq.Connection, c => {
-                        c.ConfigureConsumer<NotificationConsumer>(ctx);
-                    });
-                });
-            });
+            services.AddEventBusExtension();
 
             //Application
             services.AddApplication();

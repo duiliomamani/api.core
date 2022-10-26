@@ -2,8 +2,8 @@
 
 namespace AspNetCore.Common.Wrappers
 {
-    public interface IRequestWrapper<T> : IRequest<Response<T>> { }
-    public interface IRequestWrapper : IRequest<Response> { }
-    public interface IRequestHandlerWrapper<TIn> : IRequestHandler<TIn, Response> where TIn : IRequestWrapper { }
-    public interface IRequestHandlerWrapper<TIn, TOut> : IRequestHandler<TIn, Response<TOut>> where TIn : IRequestWrapper<TOut> { }
+    public interface IRequestWrapper<T> : IRequest<TResponse<T>> { }
+    public interface IRequestWrapper : IRequest<TResponse> { }
+    public interface IRequestHandlerWrapper<TIn> : IRequestHandler<TIn, TResponse> where TIn : IRequestWrapper { }
+    public interface IRequestHandlerWrapper<TIn, TOut> : IRequestHandler<TIn, TResponse<TOut>> where TIn : IRequestWrapper<TOut> { }
 }

@@ -7,12 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
     <Folder Include="Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>

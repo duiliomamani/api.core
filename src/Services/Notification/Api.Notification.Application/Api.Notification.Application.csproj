@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\" />
     <Folder Include="Features\Notification\Queries\Get\" />
     <Folder Include="Features\Notification\Queries\GetAll\" />
     <Folder Include="Services\" />

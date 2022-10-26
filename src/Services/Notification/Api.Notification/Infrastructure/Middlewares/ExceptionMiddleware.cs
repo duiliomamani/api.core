@@ -29,7 +29,7 @@ namespace Api.Notification.Infrastructure.Middleware
                 var response = context.Response;
                 response.ContentType = "application/json";
 
-                var responseModel = new Response
+                var responseModel = new TResponse
                 {
                     IsSuccessfull = false,
                     Message = e.Message,
