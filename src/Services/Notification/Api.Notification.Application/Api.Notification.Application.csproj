@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Infrastructure\Api.Core.Infrastructure.EventBus.Messages\Api.Core.Infrastructure.EventBus.Messages.csproj" />
-    <ProjectReference Include="..\..\..\Infrastructure\Api.Core.Infrastructure.Shared\Api.Notification.Domain.csproj" />
+    <ProjectReference Include="..\Api.Notification.Domain\Api.Notification.Domain.csproj" />
   </ItemGroup>
 
 </Project>
